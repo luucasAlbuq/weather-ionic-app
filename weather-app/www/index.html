@@ -38,23 +38,28 @@
  
   <body ng-app="weather-app" ng-controller="weatherCtrl">
     <ion-pane>
-        <ion-header-bar class="bar-stable">
-        </ion-header-bar>
+      <div class="bar bar-header bar-calm">
+        <h1 class="title">Weather App</h1>
+      </div>
 
-        <ion-content class="text-center">
-          <div ng-show="loading">
-            <label>Carregando Informações...</label>
-          </div>
-              
-          <div ng-hide="loading">
-            <p>
-                    Temperatura: {{toCelsius(weatherInfo.currently.temperature)}}º
-            </p>
-            <p>
-                    Sensação térmica: {{toCelsius(weatherInfo.currently.apparentTemperature)}}º
-            </p>
-          </div>
-        </ion-content>
+     <div class="tabs tabs-icon-top tabs-calm">
+        <a class="tab-item">
+          <i class="icon ion-home"></i>
+          Currently
+        </a>
+        <a class="tab-item">
+          <i class="icon ion-android-time"></i>
+          Hourly
+        </a>
+        <a class="tab-item">
+          <i class="icon ion-android-calendar"></i>
+          Daily
+        </a>
+    </div>
+
+      <ion-content class="text-center">
+        
+      </ion-content>
     </ion-pane>
     
   </body>
