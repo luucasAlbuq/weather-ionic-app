@@ -26,10 +26,15 @@ angular.module('weather-app', ['ionic', 'starter.controllers', 'starter.services
 .controller('weatherCtrl', function($scope, $cordovaGeolocation, weather){
   $scope.loading = true;
   $scope.weatherInfo  = {};
+  $scope.currently = {};
 
   $scope.toCelsius = function(temperature) {
     return ((temperature - 32) / 1.8).toFixed(1);
   };
+
+  $scope.toKmh = function(mlh){
+    return (mlh*0.621371192237).toFixed(1);
+  }
 
   $cordovaGeolocation.getCurrentPosition({timeout: 10000,enableHighAccuracy: false})
     .then(function(position){
@@ -39,6 +44,7 @@ angular.module('weather-app', ['ionic', 'starter.controllers', 'starter.services
             weather.getCurrentWeather(lat,long).then(function(data){
               console.log("*****",data)
               $scope.weatherInfo = data;
+              $scope.currently = data.currently;
               $scope.loading = false;
             }, function(error){
               console.log(">>> ERROR:",error);
