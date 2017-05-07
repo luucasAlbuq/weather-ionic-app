@@ -3,7 +3,7 @@
       <div class="card item item-body text-center">
         <img src="img/{{currently.icon}}.png">
         <h1>{{currently.summary}}</h1>
-        <h2><b>{{toCelsius(currently.temperature)}}°C</b></h2>
+        <h2><b>{{currently.temperature.toFixed(1)}}°C</b></h2>
       </div>
 
       <div class="list card">
@@ -14,7 +14,7 @@
           <div class="item item-avatar ">
             <img src="http://icons.iconarchive.com/icons/aha-soft/free-3d-glossy/48/Thermometer-icon.png">
             <h2>Temperature</h2>
-            <p>{{toCelsius(currently.temperature)}}°C</p>
+            <p>{{currently.temperature.toFixed(1)}}°C</p>
           </div>
           <div class="item item-avatar">
             <img src="http://icons.iconarchive.com/icons/custom-icon-design/lovely-weather-2/48/Humidity-icon.png">
@@ -24,18 +24,18 @@
           <div class="item item-avatar">
             <img src="http://icons.iconarchive.com/icons/custom-icon-design/lovely-weather/48/fog-icon.png">
             <h2>Cloud Cover</h2>
-            <p>{{currently.cloudCover*100}} %</p>
+            <p>{{(currently.cloudCover*100).toFixed(1)}} %</p>
           </div>
-          <div class="item item-avatar" ng-show="{{currently.precipProbability > 0}}">
+          <div class="item item-avatar" ng-show="currently.precipProbability > 0">
             <img src="http://icons.iconarchive.com/icons/custom-icon-design/lovely-weather/48/umbrella-icon.png">
             <h2>Probability of Precipitation</h2>
             <p>{{currently.precipType}}</p>
-            <p>{{currently.precipProbability*100}} %</p>
+            <p>{{(currently.precipProbability*100).toFixed(1)}} %</p>
           </div>
           <div class="item item-avatar">
             <img src="http://icons.iconarchive.com/icons/large-icons/large-weather/48/wind-vane-icon.png">
-            <h2>Velocidade do Vento</h2>
-            <p>{{toKmh(currently.windSpeed)}} km/h</p>
+            <h2>Wind Speed</h2>
+            <p>{{currently.windSpeed.toFixed(2)}} km/h</p>
           </div>
         </div>
       </div>

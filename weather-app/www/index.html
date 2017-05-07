@@ -43,17 +43,15 @@
       <h1 class="title">Weather App</h1>
     </div>
 
-    <div ng-include="'currently_weather.html'"></div>
+    <div ng-if="view == 'currentlyView'" ng-include="'views/currently_weather.html'"></div>
+    <div ng-if="view == 'weeklyView'" ng-include="'views/weekly_weather.html'"></div>
 
     <div class="tabs tabs-icon-top tabs-calm">
-      <a class="tab-item">
+      <a class="tab-item" ng-click="openCurrentlyView()">
         <i class="icon ion-home"></i> Currently
       </a>
-      <a class="tab-item">
-        <i class="icon ion-android-time"></i> Hourly
-      </a>
-      <a class="tab-item">
-        <i class="icon ion-android-calendar"></i> Daily
+      <a class="tab-item" ng-click="openWeeklyView()">
+        <i class="icon ion-android-calendar"></i> Weekly
       </a>
     </div>
   </ion-pane>

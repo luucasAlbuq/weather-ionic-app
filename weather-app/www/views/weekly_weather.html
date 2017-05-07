@@ -1,0 +1,22 @@
+<ion-content class="has-header has-footer">
+    <div>
+        <div class="item item-avatar item-text-wrap">
+            <img src="img/{{weekly.icon}}.png">
+            <h2>Weekly Weather</h2>
+            <p class="padding-top">{{weekly.summary}}</p>
+        </div>
+    </div>
+
+    <div class="list card" ng-repeat="weather in weekly.data">
+        <a href="#" class="item item-avatar item-text-wrap" ng-click="selectDay($index)">
+            <img src="img/{{weather.icon}}.png">
+            <h2>{{getDayName($index)}}</h2>
+            <p>{{weather.summary}}</p>
+            <div class="padding-top">
+                <p>Max: {{weather.temperatureMax.toFixed(1)}}°C</p>
+                <p>Min: {{weather.temperatureMin.toFixed(1)}}°C</p>
+            </div>
+        </a>
+    </div>
+
+</ion-content>
