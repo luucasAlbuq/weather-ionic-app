@@ -12,7 +12,7 @@ angular.module('weather-app', ['ionic', 'starter.controllers', 'starter.services
   var deferred = $q.defer();
 
   function getCurrentWeather(lat,lng){
-    var url = 'https://api.forecast.io/forecast/91cb9493e810db2c9e922ca08c773720/' + lat +',' + lng + '?units=si&callback=JSON_CALLBACK';
+    var url = 'https://api.forecast.io/forecast/'+ '91cb9493e810db2c9e922ca08c773720' + '/' + lat +',' + lng + '?units=si&callback=JSON_CALLBACK';
     $http.jsonp(url).success(deferred.resolve).error(deferred.reject);
     return deferred.promise;
   }
@@ -57,7 +57,6 @@ angular.module('weather-app', ['ionic', 'starter.controllers', 'starter.services
             var long = position.coords.longitude;
 
             weather.getCurrentWeather(lat,long).then(function(data){
-              console.log("*****",data)
               $scope.weatherInfo = data;
               $scope.currently = data.currently;
               $scope.weekly = data.daily;
