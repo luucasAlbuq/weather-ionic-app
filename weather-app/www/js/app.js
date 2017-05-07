@@ -12,7 +12,7 @@ angular.module('weather-app', ['ionic', 'starter.controllers', 'starter.services
   var deferred = $q.defer();
 
   function getCurrentWeather(lat,lng){
-    var url = 'https://api.forecast.io/forecast/91cb9493e810db2c9e922ca08c773720/' + lat +',' + lng + '?callback=JSON_CALLBACK';
+    var url = 'https://api.forecast.io/forecast/91cb9493e810db2c9e922ca08c773720/' + lat +',' + lng + '?units=si&callback=JSON_CALLBACK';
     $http.jsonp(url).success(deferred.resolve).error(deferred.reject);
     return deferred.promise;
   }
@@ -23,13 +23,33 @@ angular.module('weather-app', ['ionic', 'starter.controllers', 'starter.services
 
 })
 
-.controller('weatherCtrl', function($scope, $cordovaGeolocation, weather){
+.controller('weatherCtrl', function($scope,  $ionicModal, $cordovaGeolocation, weather){
+  $scope.view = 'currentlyView'
+  $scope.weekDays = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
   $scope.loading = true;
   $scope.weatherInfo  = {};
+  $scope.currently = {};
+  $scope.weekly = {};
+  $scope.selectedDay = {};
 
-  $scope.toCelsius = function(temperature) {
-    return ((temperature - 32) / 1.8).toFixed(1);
-  };
+  $scope.selectDay = function(index){
+    $scope.selectedDay = $scope.weekly.data[index];
+    $scope.selectDay.dayName = $scope.getDayName(index);
+    $scope.openDayDetailModal();
+  }
+
+  $scope.getDayName = function(index){
+    var currentDay = new Date().getDay();
+    var dayReturnIndex =+ index;
+    if(dayReturnIndex > 8){
+      dayReturnIndex -= 8;
+    }
+    return $scope.weekDays[dayReturnIndex];
+  }
+
+  $scope.toKmh = function(mlh){
+    return (mlh*0.621371192237).toFixed(1);
+  }
 
   $cordovaGeolocation.getCurrentPosition({timeout: 10000,enableHighAccuracy: false})
     .then(function(position){
@@ -39,6 +59,8 @@ angular.module('weather-app', ['ionic', 'starter.controllers', 'starter.services
             weather.getCurrentWeather(lat,long).then(function(data){
               console.log("*****",data)
               $scope.weatherInfo = data;
+              $scope.currently = data.currently;
+              $scope.weekly = data.daily;
               $scope.loading = false;
             }, function(error){
               console.log(">>> ERROR:",error);
@@ -48,6 +70,30 @@ angular.module('weather-app', ['ionic', 'starter.controllers', 'starter.services
             console.log(">>> ERROR:",error);
           }
   );
+
+  //Configuring the views
+  $ionicModal.fromTemplateUrl('../views//day_weather_details.html',{
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal){
+    $scope.dayDetailView = modal;
+  });
+
+  $scope.openDayDetailModal = function(){
+    $scope.dayDetailView.show();
+  }
+
+  $scope.closeDayDetailModal = function(){
+    $scope.dayDetailView.hide();
+  }
+
+  $scope.openWeeklyView = function(){
+    $scope.view = 'weeklyView';
+  }
+
+  $scope.openCurrentlyView = function(){
+     $scope.view = 'currentlyView';
+  }
 
 })
 
