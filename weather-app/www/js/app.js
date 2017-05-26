@@ -51,6 +51,21 @@ angular.module('weather-app', ['ionic', 'starter.controllers', 'starter.services
     return (mlh*0.621371192237).toFixed(1);
   }
 
+  $scope.speakWeather = function(){
+    // Checks if browser supports native TTS
+    var support = responsiveVoice.voiceSupport();
+
+    if(support){
+      setTimeout(function(){
+        var summary = $scope.currently.summary;
+        if(summary != null && summary != undefined){
+             // 1 - Text / 2 - Language / 3 - Speed of Speech
+            responsiveVoice.speak("Hi the weather summary is "+summary, "UK English Female",{rate: 0.9});
+        }
+      }, 2000);
+    }
+  }
+
   $cordovaGeolocation.getCurrentPosition({timeout: 10000,enableHighAccuracy: false})
     .then(function(position){
             var lat = position.coords.latitude;
